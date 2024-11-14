@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Productos en Tiempo Real </title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('productsList', (products) => {
+      const productsList = document.getElementById('products-list');
+      productsList.innerHTML = '';
+
+      products.forEach(product => {
+        const li = document.createElement('li');
+        li.textContent = `${product.name} - ${product.price}`;
+        
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Eliminar';
+        removeButton.onclick = () => {
+          socket.emit('removeProduct', product.id);
+        };
+        li.appendChild(removeButton);
+
+        productsList.appendChild(li);
+      });
+    });
+
+    function addProduct() {
+      const name = document.getElementById('product-name').value;
+      const price = document.getElementById('product-price').value;
+      
+      const newProduct = {
+        name,
+        price
+      };
+
+      socket.emit('addProduct', newProduct);
+    }
+  </script>
+</head>
+<body>
+  <h1> Productos en Tiempo Real </h1>
+
+  <ul id="products-list">
+  </ul>
+
+  <h2> Agregar un Producto </h2>
+  <input type="text" id="product-name" placeholder="Nombre del producto" required />
+  <input type="number" id="product-price" placeholder="Precio del producto" required />
+  <button onclick="addProduct()"> Agregar Producto </button>
+
+  <br>
+  <button onclick="window.location.href='/'"> Volver al Home </button>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "tp",
+  "version": "1.0.0",
+  "description": "Servidor de ejemplo con Node.js y Express",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "hbs": "^4.2.0",
+    "socket.io": "^4.8.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
